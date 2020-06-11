@@ -1,4 +1,27 @@
-var countAdvertising = 7;
+'use strict';
+
+// Константы
+var COUNT_ADVERTISING = 7;
+
+var PIN_BUTTON_IMG_WIDTH = 40;
+var PIN_BUTTON_IMG_HEIGHT = 40;
+
+var ADDRESS_MIN_X = 0;
+var ADDRESS_MIN_Y = 0;
+var ADDRESS_MAX_X = 700;
+var ADDRESS_MAX_Y = 1200;
+
+var LOCATION_PIN_MIN_X = 0;
+var LOCATION_PIN_MIN_Y = 0;
+var LOCATION_PIN_MAX_X = 700;
+var LOCATION_PIN_MAX_Y = 1200;
+
+var PHOTO_ARRAY_LENGTH_MIN = 0;
+var PHOTO_ARRAY_LENGTH_MAX = 30;
+
+var PRICE_MIN = 1000;
+var PRICE_MAX = 5000;
+
 
 var arrFlat = ['palace', 'flat', 'house', 'bungalo'];
 var arrCheckin = ['12:00', '13:00', '14:00'];
@@ -9,6 +32,7 @@ var arrGuests = ['Один', 'Два', 'Не для гостей'];
 var arrTitle = ['Заголовок 1', 'Заголовок 2', 'Заголовок 3', 'Заголовок 4', 'Заголовок 5', 'Заголовок 6', 'Заголовок 7', 'Заголовок 8'];
 var arrDescription = ['строка с описанием 1', 'строка с описанием 2', 'строка с описанием 3', 'строка с описанием 4', 'строка с описанием 5', 'строка с описанием 6', 'строка с описанием 7', 'строка с описанием 8'];
 
+
 // получаем случайный элемент массива
 function getRandomElement(arr) {
   var rand = Math.floor(Math.random() * arr.length);
@@ -17,96 +41,110 @@ function getRandomElement(arr) {
 
 // получаем случайное фото для аватара пользователя
 function getRandomUserAvatar(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  var imageRandom = 'img/avatars/user0' + Math.floor(Math.random() * (max - min + 1)) + '.png';
+  var imageRandom = 'img/avatars/user0' + Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + '.png';
   return imageRandom;
 }
 
 // получаем случайное фото объекта
 function getRandomPhoto(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  var photoRandom = 'http://o0.github.io/assets/images/tokyo/hotel' + Math.floor(Math.random() * (max - min + 1)) + '.jpg';
+  var photoRandom = 'http://o0.github.io/assets/images/tokyo/hotel' + Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + '.jpg';
   return photoRandom;
 }
 
 // получаем случайные координаты.
 function getRandomLocations(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  var location = Math.floor(Math.random() * (max - min + 1));
+  var location = Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1));
   return location;
 }
 
 // случайная цена, диапазон от 1000 до 5000
 function getRandomPrice(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  var randomItem = Math.floor(Math.random() * (max - min + 1)) + min;
+  var randomItem = Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + Math.ceil(min);
   return 'Цена ' + Math.round(randomItem) + ' руб.';
 }
 
 // функция генерации случайных данных
-var getRandomData = function () {
-  var Advertisinglist = [
-    {
-      "author": {
-        "avatar": getRandomUserAvatar(0, countAdvertising)
+function generateRandomData() {
+  return {
+    author: {
+      avatar: getRandomUserAvatar(0, COUNT_ADVERTISING)
+    },
+    offer: {
+      title: getRandomElement(arrTitle),
+      address: {
+        locationX: getRandomLocations(ADDRESS_MIN_X, ADDRESS_MAX_X),
+        locationY: getRandomLocations(ADDRESS_MIN_Y, ADDRESS_MAX_Y),
       },
-      "offer": {
-        "title": getRandomElement(arrTitle),
-        "address": getRandomLocations(0, 1200, 0, 700),
-        "price": getRandomPrice(1000, 5000),
-        "type": getRandomElement(arrFlat),
-        "rooms": getRandomElement(arrRooms),
-        "guests": getRandomElement(arrGuests),
-        "checkin": getRandomElement(arrCheckin),
-        "checkout": getRandomElement(arrCheckout),
-        "features": getRandomElement(arrFeatures),
-        "description": getRandomElement(arrDescription),
-        "photos": getRandomPhoto(0, 30)
-      },
-      "location": {
-        "x": getRandomLocations(0, 1200),
-        "y": getRandomLocations(130, 630)
-      }
+      price: getRandomPrice(PRICE_MIN, PRICE_MAX),
+      type: getRandomElement(arrFlat),
+      rooms: getRandomElement(arrRooms),
+      guests: getRandomElement(arrGuests),
+      checkin: getRandomElement(arrCheckin),
+      checkout: getRandomElement(arrCheckout),
+      features: getRandomElement(arrFeatures),
+      description: getRandomElement(arrDescription),
+      photos: getRandomPhoto(PHOTO_ARRAY_LENGTH_MIN, PHOTO_ARRAY_LENGTH_MAX)
+    },
+    location: {
+      x: getRandomLocations(LOCATION_PIN_MIN_X, LOCATION_PIN_MAX_X),
+      y: getRandomLocations(LOCATION_PIN_MIN_Y, LOCATION_PIN_MAX_Y)
     }
-  ];
-  return Advertisinglist;
-};
+  };
+}
 
 // функция генерации массива случайных данных
-var getRandomDataArray = function () {
-  var nArr = [];
-  for (var i = 0; i < countAdvertising; i++) {
-    nArr[i] = getRandomData();
+function generateRandomAdsList() {
+  var adsList = [];
+  for (var i = 0; i < COUNT_ADVERTISING; i++) {
+    adsList[i] = generateRandomData();
   }
-  return nArr;
-};
+  return adsList;
+}
 
-console.log(getRandomDataArray());
-
-
-// функция создания DOM-элемента на основе JS-объекта
-var createElement = function (tagName, className, position) {
+// функция создания DOM-элемента Кпонка, на основе JS-объекта
+function createPinButton(tagName, className, positionX, positionY) {
   var element = document.createElement(tagName);
   element.classList.add(className);
-  element.setAttribute('style', position);
+  element.style.left = positionX;
+  element.style.top = positionY;
   return element;
-};
-console.log(createElement('button', 'map__pin', 'left:100; top: 200px'));
+}
 
-// функция заполнения блока DOM-элементами на основе массива JS-объектов
-var createItemElement = function (product) {
-  var listItem = createElement('button', 'map__pin');
-  //listItem.appendChild(title);
+// функция создания DOM-элемента на основе JS-объекта
+function createPinImage(tagName, srcValue, widthValue, heightValue, altValue) {
+  var element = document.createElement(tagName);
+  element.setAttribute('src', srcValue);
+  element.setAttribute('width', widthValue);
+  element.setAttribute('height', heightValue);
+  element.setAttribute('alt', altValue);
+  return element;
+}
 
-  var picture = createElement('img', 'product__image');
-  picture.src = product.imgUrl;
-  picture.alt = product.text;
-  listItem.appendChild(picture);
+function renderItem(linkImage, positionX, positionY, altName) {
+  var createButton = createPinButton('button', 'map__pin', positionX, positionY);
+  var createImage = createPinImage('img', linkImage, PIN_BUTTON_IMG_HEIGHT, PIN_BUTTON_IMG_WIDTH, altName);
+  createButton.appendChild(createImage);
+  return createButton;
+}
 
-  return listItem;
-};
-console.log(createItemElement(getRandomDataArray()));
+// записываем массив в переменную
+var randomAdsList = generateRandomAdsList();
+
+// генерируем список элеентов в виде DOM элементов
+function generatePinList(randomAdsArray) {
+  var itemList = [];
+  for (var i = 0; i < randomAdsArray.length; i++) {
+    itemList[i] = renderItem(randomAdsArray[i].author.avatar, randomAdsArray[i].location.y + 'px', randomAdsArray[i].location.y + 'px', randomAdsArray[i].offer.title);
+  }
+  return itemList;
+}
+
+// выводим элементы в DOM
+var arrayElements = generatePinList(randomAdsList);
+var pinArrayFragment = document.createDocumentFragment();
+var mapPins = document.querySelector('.map__pins');
+
+for (var i = 0; i < arrayElements.length; i++) {
+  pinArrayFragment.appendChild(arrayElements[i]);
+}
+mapPins.appendChild(pinArrayFragment);
