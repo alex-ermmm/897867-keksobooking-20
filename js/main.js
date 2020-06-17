@@ -116,11 +116,12 @@ function createPinImage(tag, src, width, height, alt) {
 }
 
 function renderItem(image, positionX, positionY, alt) {
-  var createButton = createPinButton('button', 'map__pin', positionX, positionY);
+  var createButton = createPinButton('button', 'map__pin', positionX + 'px', positionY + 'px');
   var createImage = createPinImage('img', image, PIN_BUTTON_IMG_HEIGHT, PIN_BUTTON_IMG_WIDTH, alt);
   createButton.appendChild(createImage);
   return createButton;
 }
+console.log(renderItem('ddd', 100, 200, 'wew'));
 
 // записываем массив в переменную
 var randomAdsList = generateRandomAdsList();
@@ -128,24 +129,26 @@ var randomAdsList = generateRandomAdsList();
 // генерируем список элементов в виде DOM элементов
 function generatePinList(randomAdsArray) {
   var itemList = [];
+
   for (var i = 0; i < randomAdsArray.length; i++) {
-    itemList[i] = renderItem(randomAdsArray[i].author.avatar, randomAdsArray[i].location.y + 'px', randomAdsArray[i].location.y + 'px', randomAdsArray[i].offer.title);
+    itemList[i] = renderItem(randomAdsArray[i].author.avatar, randomAdsArray[i].location.y, randomAdsArray[i].location.y, randomAdsArray[i].offer.title);
   }
+
   return itemList;
 }
 
+var listElements = generatePinList(randomAdsList);
 
 // выводим элементы в DOM
-// renderPins
-function renderPins() {
-  var arrayElements = generatePinList(randomAdsList);
+function renderPins(elements) {
   var pinArrayFragment = document.createDocumentFragment();
   var mapPins = document.querySelector('.map__pins');
 
-  for (var i = 0; i < arrayElements.length; i++) {
-    pinArrayFragment.appendChild(arrayElements[i]);
+  for (var i = 0; i < elements.length; i++) {
+    pinArrayFragment.appendChild(elements[i]);
   }
   mapPins.appendChild(pinArrayFragment);
 }
-renderPins();
+
+renderPins(listElements);
 
