@@ -23,44 +23,39 @@ var PRICE_MIN = 1000;
 var PRICE_MAX = 5000;
 
 
-var arrFlat = ['palace', 'flat', 'house', 'bungalo'];
-var arrCheckin = ['12:00', '13:00', '14:00'];
-var arrCheckout = ['12:00', '13:00', '14:00'];
-var arrFeatures = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var arrRooms = ['1', '2', '3'];
-var arrGuests = ['Один', 'Два', 'Не для гостей'];
-var arrTitle = ['Заголовок 1', 'Заголовок 2', 'Заголовок 3', 'Заголовок 4', 'Заголовок 5', 'Заголовок 6', 'Заголовок 7', 'Заголовок 8'];
-var arrDescription = ['строка с описанием 1', 'строка с описанием 2', 'строка с описанием 3', 'строка с описанием 4', 'строка с описанием 5', 'строка с описанием 6', 'строка с описанием 7', 'строка с описанием 8'];
+var typeHouses = ['palace', 'flat', 'house', 'bungalo'];
+var checkin = ['12:00', '13:00', '14:00'];
+var checkout = ['12:00', '13:00', '14:00'];
+var features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var rooms = ['1', '2', '3'];
+var guests = ['Один', 'Два', 'Не для гостей'];
+var titles = ['Заголовок 1', 'Заголовок 2', 'Заголовок 3', 'Заголовок 4', 'Заголовок 5', 'Заголовок 6', 'Заголовок 7', 'Заголовок 8'];
+var descriptions = ['строка с описанием 1', 'строка с описанием 2', 'строка с описанием 3', 'строка с описанием 4', 'строка с описанием 5', 'строка с описанием 6', 'строка с описанием 7', 'строка с описанием 8'];
 
 
 // получаем случайный элемент массива
 function getRandomElement(arr) {
-  var rand = Math.floor(Math.random() * arr.length);
-  return arr[rand];
+  return arr[Math.floor(Math.random() * arr.length)];
 }
 
 // получаем случайное фото для аватара пользователя
 function getRandomUserAvatar(min, max) {
-  var imageRandom = 'img/avatars/user0' + Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + '.png';
-  return imageRandom;
+  return 'img/avatars/user0' + Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + '.png';
 }
 
 // получаем случайное фото объекта
 function getRandomPhoto(min, max) {
-  var photoRandom = 'http://o0.github.io/assets/images/tokyo/hotel' + Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + '.jpg';
-  return photoRandom;
+  return 'http://o0.github.io/assets/images/tokyo/hotel' + Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + '.jpg';
 }
 
 // получаем случайные координаты.
 function getRandomLocations(min, max) {
-  var location = Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1));
-  return location;
+  return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1));
 }
 
 // случайная цена, диапазон от 1000 до 5000
 function getRandomPrice(min, max) {
-  var randomItem = Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + Math.ceil(min);
-  return 'Цена ' + Math.round(randomItem) + ' руб.';
+  return 'Цена ' + Math.round(Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + Math.ceil(min)) + ' руб.';
 }
 
 // функция генерации случайных данных
@@ -70,19 +65,19 @@ function generateRandomData() {
       avatar: getRandomUserAvatar(0, COUNT_ADVERTISING)
     },
     offer: {
-      title: getRandomElement(arrTitle),
+      title: getRandomElement(titles),
       address: {
         locationX: getRandomLocations(ADDRESS_MIN_X, ADDRESS_MAX_X),
         locationY: getRandomLocations(ADDRESS_MIN_Y, ADDRESS_MAX_Y),
       },
       price: getRandomPrice(PRICE_MIN, PRICE_MAX),
-      type: getRandomElement(arrFlat),
-      rooms: getRandomElement(arrRooms),
-      guests: getRandomElement(arrGuests),
-      checkin: getRandomElement(arrCheckin),
-      checkout: getRandomElement(arrCheckout),
-      features: getRandomElement(arrFeatures),
-      description: getRandomElement(arrDescription),
+      type: getRandomElement(typeHouses),
+      rooms: getRandomElement(rooms),
+      guests: getRandomElement(guests),
+      checkin: getRandomElement(checkin),
+      checkout: getRandomElement(checkout),
+      features: getRandomElement(features),
+      description: getRandomElement(descriptions),
       photos: getRandomPhoto(PHOTO_ARRAY_LENGTH_MIN, PHOTO_ARRAY_LENGTH_MAX)
     },
     location: {
@@ -111,18 +106,18 @@ function createPinButton(tagName, className, positionX, positionY) {
 }
 
 // функция создания DOM-элемента на основе JS-объекта
-function createPinImage(tagName, srcValue, widthValue, heightValue, altValue) {
-  var element = document.createElement(tagName);
-  element.setAttribute('src', srcValue);
-  element.setAttribute('width', widthValue);
-  element.setAttribute('height', heightValue);
-  element.setAttribute('alt', altValue);
+function createPinImage(tag, src, width, height, alt) {
+  var element = document.createElement(tag);
+  element.setAttribute('src', src);
+  element.setAttribute('width', width);
+  element.setAttribute('height', height);
+  element.setAttribute('alt', alt);
   return element;
 }
 
-function renderItem(linkImage, positionX, positionY, altName) {
+function renderItem(image, positionX, positionY, alt) {
   var createButton = createPinButton('button', 'map__pin', positionX, positionY);
-  var createImage = createPinImage('img', linkImage, PIN_BUTTON_IMG_HEIGHT, PIN_BUTTON_IMG_WIDTH, altName);
+  var createImage = createPinImage('img', image, PIN_BUTTON_IMG_HEIGHT, PIN_BUTTON_IMG_WIDTH, alt);
   createButton.appendChild(createImage);
   return createButton;
 }
@@ -130,7 +125,7 @@ function renderItem(linkImage, positionX, positionY, altName) {
 // записываем массив в переменную
 var randomAdsList = generateRandomAdsList();
 
-// генерируем список элеентов в виде DOM элементов
+// генерируем список элементов в виде DOM элементов
 function generatePinList(randomAdsArray) {
   var itemList = [];
   for (var i = 0; i < randomAdsArray.length; i++) {
@@ -139,12 +134,18 @@ function generatePinList(randomAdsArray) {
   return itemList;
 }
 
-// выводим элементы в DOM
-var arrayElements = generatePinList(randomAdsList);
-var pinArrayFragment = document.createDocumentFragment();
-var mapPins = document.querySelector('.map__pins');
 
-for (var i = 0; i < arrayElements.length; i++) {
-  pinArrayFragment.appendChild(arrayElements[i]);
+// выводим элементы в DOM
+// renderPins
+function renderPins() {
+  var arrayElements = generatePinList(randomAdsList);
+  var pinArrayFragment = document.createDocumentFragment();
+  var mapPins = document.querySelector('.map__pins');
+
+  for (var i = 0; i < arrayElements.length; i++) {
+    pinArrayFragment.appendChild(arrayElements[i]);
+  }
+  mapPins.appendChild(pinArrayFragment);
 }
-mapPins.appendChild(pinArrayFragment);
+renderPins();
+
