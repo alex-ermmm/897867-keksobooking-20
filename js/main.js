@@ -121,7 +121,6 @@ function renderItem(image, positionX, positionY, alt) {
   createButton.appendChild(createImage);
   return createButton;
 }
-console.log(renderItem('ddd', 100, 200, 'wew'));
 
 // записываем массив в переменную
 var randomAdsList = generateRandomAdsList();
