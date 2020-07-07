@@ -6,11 +6,6 @@ var COUNT_ADVERTISING = 7;
 var PIN_BUTTON_IMG_WIDTH = 40;
 var PIN_BUTTON_IMG_HEIGHT = 40;
 
-/*var ADDRESS_MIN_X = 0;
-var ADDRESS_MIN_Y = 0;
-var ADDRESS_MAX_X = 700;
-var ADDRESS_MAX_Y = 1200;*/
-
 var LOCATION_PIN_MIN_X = 0;
 var LOCATION_PIN_MAX_X = 630;
 
@@ -214,7 +209,6 @@ mapPinMain.addEventListener('mousedown', function (evt) {
 // по клику на метку удалем клас у карты по клику enter и она становится активна
 mapPinMain.addEventListener('keydown', function (evt) {
   if (evt.key === 'Enter') {
-    var mapShow = document.querySelector('.map');
     mapShow.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
     formEnebled(mapFilter);
@@ -224,15 +218,16 @@ mapPinMain.addEventListener('keydown', function (evt) {
 // функция синхронизации время заезда и выезда
 var timeIn = document.querySelector('#timein');
 var timeOut = document.querySelector('#timeout');
+var changedTime;
 
 timeIn.addEventListener('change', function () {
-  var newTime = timeIn.value;
-  timeOut.value = newTime;
+  changedTime = timeIn.value;
+  timeOut.value = changedTime;
 });
 
 timeOut.addEventListener('change', function () {
-  var newTime = timeOut.value;
-  timeIn.value = newTime;
+  changedTime = timeOut.value;
+  timeIn.value = changedTime;
 });
 
 // проверяем клик то типу жилья и меняем цену минимальную
