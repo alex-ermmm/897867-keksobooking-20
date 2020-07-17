@@ -7,6 +7,7 @@
     element.classList.add(className);
     element.style.left = positionX;
     element.style.top = positionY;
+
     return element;
   }
 
@@ -17,6 +18,7 @@
     element.setAttribute('width', width);
     element.setAttribute('height', height);
     element.setAttribute('alt', alt);
+
     return element;
   }
 
@@ -24,6 +26,7 @@
     var createButton = createPinButton('button', 'map__pin', positionX + 'px', positionY + 'px');
     var createImage = createPinImage('img', image, window.constants.PIN_BUTTON_IMG_HEIGHT, window.constants.PIN_BUTTON_IMG_WIDTH, alt);
     createButton.appendChild(createImage);
+
     return createButton;
   }
 
@@ -51,6 +54,7 @@
     for (var i = 0; i < elements.length; i++) {
       pinArrayFragment.appendChild(elements[i]);
     }
+
     mapPins.appendChild(pinArrayFragment);
   }
 

@@ -24,6 +24,7 @@
   var PRICE_FLAT = 1000;
   var PRICE_HOUSE = 5000;
   var PRICE_PALACE = 10000;
+  var PRICE_DEFAULT = 'Выберите тип жилья';
 
   var typeHouses = ['palace', 'flat', 'house', 'bungalo'];
   var checkin = ['12:00', '13:00', '14:00'];
@@ -50,6 +51,7 @@
     PRICE_FLAT: PRICE_FLAT,
     PRICE_HOUSE: PRICE_HOUSE,
     PRICE_PALACE: PRICE_PALACE,
+    PRICE_DEFAULT: PRICE_DEFAULT,
     typeHouses: typeHouses,
     checkin: checkin,
     checkout: checkout,

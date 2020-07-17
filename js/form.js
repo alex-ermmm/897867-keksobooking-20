@@ -3,28 +3,28 @@
 (function () {
 
   // блокируем элемнты формы
-  var mapFilter = document.querySelectorAll('.map__filter');
-  var mapCheckbox = document.querySelectorAll('.map__checkbox');
-  var adFormElement = document.querySelectorAll('.ad-form__element');
+  var mapsFilter = document.querySelectorAll('.map__filter');
+  var mapsCheckbox = document.querySelectorAll('.map__checkbox');
+  var adFormsElements = document.querySelectorAll('.ad-form__element');
 
   // функция отключения элементов формы
-  function formDisabled(formItem) {
+  function formElementDisabled(formItem) {
     for (var j = 0; j < formItem.length; j++) {
       formItem[j].disabled = true;
     }
   }
 
   // отключли select
-  formDisabled(mapFilter);
+  formElementDisabled(mapsFilter);
 
   // отключли chekbox
-  formDisabled(mapCheckbox);
+  formElementDisabled(mapsCheckbox);
 
   // отключли форму добавления
-  formDisabled(adFormElement);
+  formElementDisabled(adFormsElements);
 
   // функция включения элементов формы
-  function formEnebled(formItem) {
+  function elementsFormsEnebled(formItem) {
     for (var j = 0; j < formItem.length; j++) {
       formItem[j].disabled = false;
     }
@@ -36,58 +36,67 @@
   // определяем адрес начальный
   address.value = 'x = ' + mapPinMain.offsetLeft + ' y = ' + mapPinMain.offsetTop;
 
-  var mapShow = document.querySelector('.map');
+  var map = document.querySelector('.map');
   var adForm = document.querySelector('.ad-form');
 
   // по клику на метку удалем клас у карты по клику мыши и она становится активна
-  mapPinMain.addEventListener('mousedown', function (evt) {
+  function clickButtonFormsEnebled(evt) {
     evt.preventDefault();
+
     if (evt.which === 1) {
       // включили select
-      formEnebled(mapFilter);
+      elementsFormsEnebled(mapsFilter);
 
       // включили chekbox
-      formEnebled(mapCheckbox);
+      elementsFormsEnebled(mapsCheckbox);
 
       // включили форму добавления
-      formEnebled(adFormElement);
+      elementsFormsEnebled(adFormsElements);
 
-      mapShow.classList.remove('map--faded');
+      map.classList.remove('map--faded');
       adForm.classList.remove('ad-form--disabled');
     }
-  });
+  }
+
+  mapPinMain.addEventListener('mousedown', clickButtonFormsEnebled);
+
 
   // по клику на метку удалем клас у карты по клику enter и она становится активна
-  mapPinMain.addEventListener('keydown', function (evt) {
+  function enterKeydownActivationMap(evt) {
     if (evt.key === 'Enter') {
-      mapShow.classList.remove('map--faded');
+      map.classList.remove('map--faded');
       adForm.classList.remove('ad-form--disabled');
-      formEnebled(mapFilter);
+      elementsFormsEnebled(mapsFilter);
     }
-  });
+  }
+
+  mapPinMain.addEventListener('keydown', enterKeydownActivationMap);
 
   // функция синхронизации время заезда и выезда
   var timeIn = document.querySelector('#timein');
   var timeOut = document.querySelector('#timeout');
   var changedTime;
 
-  timeIn.addEventListener('change', function () {
-    changedTime = timeIn.value;
+  function changeTimeOut(evt) {
+    changedTime = evt.target.value;
     timeOut.value = changedTime;
-  });
+  }
 
-  timeOut.addEventListener('change', function () {
-    changedTime = timeOut.value;
+  timeIn.addEventListener('change', changeTimeOut);
+
+  function changeTimeIn(evt) {
+    changedTime = evt.target.value;
     timeIn.value = changedTime;
-  });
+  }
+
+  timeOut.addEventListener('change', changeTimeIn);
 
   // проверяем клик то типу жилья и меняем цену минимальную
   var type = document.querySelector('#type');
   var price = document.querySelector('#price');
 
-  type.addEventListener('change', function () {
-    var typeOfHousing = document.querySelector('#type');
-    switch (typeOfHousing.value) {
+  function changePlaceholderPrice() {
+    switch (type.value) {
       case 'bungalo':
         price.placeholder = window.constants.PRICE_BUNGALO;
         break;
@@ -100,47 +109,44 @@
       case 'palace':
         price.placeholder = window.constants.PRICE_PALACE;
         break;
+      default:
+        price.placeholder = window.constants.PRICE_DEFAULT;
+        break;
     }
-  });
+  }
+
+  type.addEventListener('change', changePlaceholderPrice);
+
 
   // соотносим количесвтво комнат и жильцов
   var roomNumber = document.querySelector('#room_number');
+  var capacity = document.querySelector('#capacity');
+  var capacityOptionsLength = capacity.options.length;
 
-  function checkRoomForCapacity(capacity) {
-    capacity.value = roomNumber.value;
+  function onRoomNumberChange(evt) {
     for (var i = 0; i < capacity.options.length; i++) {
-      if (capacity.options[i].value <= roomNumber.value && capacity.options[i].value !== '0') {
-        capacity.options[i].disabled = false;
-        capacity.options[i].selected = false;
-      } else {
-        capacity.options[i].disabled = true;
+      if (Number(evt.target.value) !== capacityOptionsLength) {
+        if (evt.target.value === capacity.options[i].value) {
+          capacity.options[i].setAttribute('selected', 'selected');
+          capacity.options[i].removeAttribute('disabled', 'disabled');
+        } else if (evt.target.value > capacity.options[i].value) {
+          capacity.options[i].removeAttribute('disabled', 'disabled');
+          capacity.options[i].removeAttribute('selected', 'selected');
+        } else if (evt.target.value < capacity.options[i].value) {
+          capacity.options[i].setAttribute('disabled', 'disabled');
+          capacity.options[i].removeAttribute('selected', 'selected');
+        }
+      } else if (Number(evt.target.value) === capacityOptionsLength) {
+        if (evt.target.value > capacity.options[i].value) {
+          capacity.options[i].setAttribute('disabled', 'disabled');
+          capacity.options[i].removeAttribute('selected', 'selected');
+        } else if (evt.target.value <= capacity.options[i].value) {
+          capacity.options[i].removeAttribute('disabled', 'disabled');
+          capacity.options[i].setAttribute('selected', 'selected');
+        }
       }
     }
   }
 
-  roomNumber.addEventListener('change', function () {
-    var capacity = document.querySelector('#capacity');
-    switch (roomNumber.value) {
-      case '1':
-        checkRoomForCapacity(capacity);
-        break;
-      case '2':
-        checkRoomForCapacity(capacity);
-        break;
-      case '3':
-        checkRoomForCapacity(capacity);
-        break;
-      case '100':
-        for (var i = 0; i < capacity.options.length; i++) {
-          if (capacity.options[i].value === '0') {
-            capacity.options[i].disabled = false;
-            capacity.options[i].selected = true;
-          } else {
-            capacity.options[i].disabled = true;
-            capacity.options[i].selected = false;
-          }
-        }
-        break;
-    }
-  });
+  roomNumber.addEventListener('change', onRoomNumberChange);
 })();

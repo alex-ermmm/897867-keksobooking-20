@@ -58,15 +58,15 @@
   // функция генерации массива случайных данных
   function generateRandomAdsList() {
     var adsList = [];
+
     for (var i = 0; i < window.constants.COUNT_ADVERTISING; i++) {
       adsList[i] = generateRandomData();
     }
+
     return adsList;
   }
 
-  // eslint-disable-next-line no-redeclare
   var RandomAdsList = generateRandomAdsList();
-
 
   window.data = {
     RandomAdsList: RandomAdsList
