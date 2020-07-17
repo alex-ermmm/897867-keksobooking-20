@@ -46,10 +46,8 @@
     if (evt.which === 1) {
       // включили select
       elementsFormsEnebled(mapsFilter);
-
       // включили chekbox
       elementsFormsEnebled(mapsCheckbox);
-
       // включили форму добавления
       elementsFormsEnebled(adFormsElements);
 
