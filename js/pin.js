@@ -1,6 +1,9 @@
 'use strict';
 
 (function () {
+
+  console.log(window.loadAdsList);
+
   // функция создания DOM-элемента Кпонка, на основе JS-объекта
   function createPinButton(tagName, className, positionX, positionY) {
     var element = document.createElement(tagName);
@@ -25,26 +28,22 @@
   function renderItem(image, positionX, positionY, alt) {
     var createButton = createPinButton('button', 'map__pin', positionX + 'px', positionY + 'px');
     var createImage = createPinImage('img', image, window.constants.PIN_BUTTON_IMG_HEIGHT, window.constants.PIN_BUTTON_IMG_WIDTH, alt);
+
     createButton.appendChild(createImage);
 
     return createButton;
   }
 
-  // записываем массив в переменную
-  var randomAdsList = window.data.RandomAdsList;
-
   // генерируем список элементов в виде DOM элементов
-  function generatePinList(randomAdsArray) {
+  function generatePinList(data) {
     var itemList = [];
 
-    for (var i = 0; i < randomAdsArray.length; i++) {
-      itemList[i] = renderItem(randomAdsArray[i].author.avatar, randomAdsArray[i].location.y, randomAdsArray[i].location.x, randomAdsArray[i].offer.title);
+    for (var i = 0; i < data.length; i++) {
+      itemList[i] = renderItem(data[i].author.avatar, data[i].location.y, data[i].location.x, data[i].offer.title);
     }
 
     return itemList;
   }
-
-  var listElements = generatePinList(randomAdsList);
 
   // выводим элементы в DOM
   function renderPins(elements) {
@@ -58,5 +57,8 @@
     mapPins.appendChild(pinArrayFragment);
   }
 
-  renderPins(listElements);
+  window.pin = {
+    generatePinList: generatePinList,
+    renderPins: renderPins
+  }
 })();
