@@ -2,9 +2,24 @@
 
 (function () {
   var URL = 'https://javascript.pages.academy/keksobooking/data';
+  var mapFilters = document.querySelector('.map__filters');
+  var housingType = mapFilters.querySelector('#housing-type');
+
+  function housingTypeHandler(evt) {
+    var listAds = window.adsData.filter(function (advertisement) {
+      return advertisement.offer.type === evt.target.value;
+    });
+
+    return window.pin.renderPins(window.pin.generatePinList(listAds))
+  }
 
   function onSuccess(data) {
-    return window.pin.renderPins(window.pin.generatePinList(data));
+    // фильтруем массив
+    window.adsData = data;
+
+    housingType.addEventListener('change', housingTypeHandler);
+
+    window.pin.renderPins(window.pin.generatePinList(data));
   }
 
   function onError(message) {
@@ -23,8 +38,6 @@
     var xhr = new XMLHttpRequest();
 
     xhr.responseType = 'json';
-
-    console.log(xhr.response);
 
     function loadHandler() {
       if (xhr.status === 200) {
@@ -52,9 +65,7 @@
 
     xhr.open('GET', url);
     xhr.send();
-
   }
 
   loadData(URL, onSuccess, onError);
-  //console.log(listElements);
 })();

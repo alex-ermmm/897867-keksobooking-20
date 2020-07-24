@@ -3,7 +3,7 @@
 (function () {
 
   // Константы
-  var COUNT_ADVERTISING = 7;
+  var COUNT_ADVERTISING = 5;
 
   var PIN_BUTTON_IMG_WIDTH = 40;
   var PIN_BUTTON_IMG_HEIGHT = 40;
@@ -12,7 +12,7 @@
   var LOCATION_PIN_MAX_X = 630;
 
   var LOCATION_PIN_MIN_Y = 130;
-  var LOCATION_PIN_MAX_Y = 1200;
+  var LOCATION_PIN_MAX_Y = 630;
 
   var PHOTO_ARRAY_LENGTH_MIN = 0;
   var PHOTO_ARRAY_LENGTH_MAX = 30;

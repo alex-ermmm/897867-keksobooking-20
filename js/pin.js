@@ -1,12 +1,10 @@
 'use strict';
 
 (function () {
-
-  console.log(window.loadAdsList);
-
   // функция создания DOM-элемента Кпонка, на основе JS-объекта
   function createPinButton(tagName, className, positionX, positionY) {
     var element = document.createElement(tagName);
+
     element.classList.add(className);
     element.style.left = positionX;
     element.style.top = positionY;
@@ -17,6 +15,7 @@
   // функция создания DOM-элемента на основе JS-объекта
   function createPinImage(tag, src, width, height, alt) {
     var element = document.createElement(tag);
+
     element.setAttribute('src', src);
     element.setAttribute('width', width);
     element.setAttribute('height', height);
@@ -39,18 +38,32 @@
     var itemList = [];
 
     for (var i = 0; i < data.length; i++) {
-      itemList[i] = renderItem(data[i].author.avatar, data[i].location.y, data[i].location.x, data[i].offer.title);
+      itemList[i] = renderItem(data[i].author.avatar, data[i].location.x, data[i].location.y, data[i].offer.title);
     }
 
     return itemList;
   }
 
+  var mapPins = document.querySelector('.map__pins');
+
   // выводим элементы в DOM
   function renderPins(elements) {
-    var pinArrayFragment = document.createDocumentFragment();
-    var mapPins = document.querySelector('.map__pins');
+    var mapMainPin = document.querySelector('.map__pin--main');
+    var mapMainOverlay = document.querySelector('.map__overlay');
 
-    for (var i = 0; i < elements.length; i++) {
+    mapPins.innerHTML = '';
+
+    var pinArrayFragment = document.createDocumentFragment();
+
+    pinArrayFragment.append(mapMainPin);
+    pinArrayFragment.prepend(mapMainOverlay);
+
+    var lengthAdsList = elements.length;
+    if (elements.length >= window.constants.COUNT_ADVERTISING) {
+      lengthAdsList = window.constants.COUNT_ADVERTISING;
+    }
+
+    for (var i = 0; i < lengthAdsList; i++) {
       pinArrayFragment.appendChild(elements[i]);
     }
 
