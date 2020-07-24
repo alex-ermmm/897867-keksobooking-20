@@ -73,5 +73,5 @@
   window.pin = {
     generatePinList: generatePinList,
     renderPins: renderPins
-  }
+  };
 })();

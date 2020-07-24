@@ -10,7 +10,7 @@
       return advertisement.offer.type === evt.target.value;
     });
 
-    return window.pin.renderPins(window.pin.generatePinList(listAds))
+    return window.pin.renderPins(window.pin.generatePinList(listAds));
   }
 
   function onSuccess(data) {
@@ -34,16 +34,16 @@
     document.body.insertAdjacentElement('afterbegin', node);
   }
 
-  function loadData(url, onSuccess, onError) {
+  function loadData(url, checkSuccess, checkError) {
     var xhr = new XMLHttpRequest();
 
     xhr.responseType = 'json';
 
     function loadHandler() {
       if (xhr.status === 200) {
-        onSuccess(xhr.response);
+        checkSuccess(xhr.response);
       } else {
-        onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
+        checkError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
     }
 
