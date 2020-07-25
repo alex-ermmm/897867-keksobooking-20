@@ -58,7 +58,6 @@
 
   mapPinMain.addEventListener('mousedown', clickButtonFormsEnebled);
 
-
   // по клику на метку удалем клас у карты по клику enter и она становится активна
   function enterKeydownActivationMap(evt) {
     if (evt.key === 'Enter') {
@@ -114,7 +113,6 @@
   }
 
   type.addEventListener('change', changePlaceholderPrice);
-
 
   // соотносим количесвтво комнат и жильцов
   var roomNumber = document.querySelector('#room_number');
