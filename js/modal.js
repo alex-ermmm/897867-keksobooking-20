@@ -28,7 +28,7 @@
   function responseOk(evt) {
     evt.preventDefault();
 
-    window.send.sendData(new FormData(form), function (response) {
+    window.send.sendData(new FormData(form), function () {
       var map = document.querySelector('.map');
       map.classList.add('map--faded');
 
