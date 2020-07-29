@@ -2,24 +2,26 @@
 
 (function () {
   var URL = 'https://javascript.pages.academy/keksobooking/data';
-  var mapFilters = document.querySelector('.map__filters');
-  var housingType = mapFilters.querySelector('#housing-type');
-
-  function housingTypeHandler(evt) {
-    var listAds = window.adsData.filter(function (advertisement) {
-      return advertisement.offer.type === evt.target.value;
-    });
-
-    return window.pin.renderPins(window.pin.generatePinList(listAds));
-  }
 
   function onSuccess(data) {
-    // фильтруем массив
-    window.adsData = data;
+    var pins = document.querySelector('.map__pins');
+    window.pins.data = data;
 
-    housingType.addEventListener('change', housingTypeHandler);
+    function pinHandler(evt) {
 
-    window.pin.renderPins(window.pin.generatePinList(data));
+      var pin = evt.target.closest('.map__pin');
+
+      if (pin && pin.dataset.id) {
+        var element = window.pins.data.find(function (it) {
+          return it.id.toString() === pin.dataset.id;
+        });
+
+        if (element) {
+          window.popup.openPopup(element);
+        }
+      }
+    }
+    pins.addEventListener('click', pinHandler);
   }
 
   function onError(message) {
@@ -41,7 +43,11 @@
 
     function loadHandler() {
       if (xhr.status === 200) {
-        checkSuccess(xhr.response);
+        checkSuccess(xhr.response.map(function (pin) {
+          pin.id = Math.random();
+
+          return pin;
+        }));
       } else {
         checkError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
@@ -65,6 +71,7 @@
 
     xhr.open('GET', url);
     xhr.send();
+
   }
 
   loadData(URL, onSuccess, onError);

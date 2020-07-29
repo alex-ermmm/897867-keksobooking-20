@@ -26,14 +26,18 @@
   var PRICE_PALACE = 10000;
   var PRICE_DEFAULT = 'Выберите тип жилья';
 
-  var typeHouses = ['palace', 'flat', 'house', 'bungalo'];
-  var checkin = ['12:00', '13:00', '14:00'];
-  var checkout = ['12:00', '13:00', '14:00'];
-  var features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-  var rooms = ['1', '2', '3'];
-  var guests = ['Один', 'Два', 'Не для гостей'];
-  var titles = ['Заголовок 1', 'Заголовок 2', 'Заголовок 3', 'Заголовок 4', 'Заголовок 5', 'Заголовок 6', 'Заголовок 7', 'Заголовок 8'];
-  var descriptions = ['строка с описанием 1', 'строка с описанием 2', 'строка с описанием 3', 'строка с описанием 4', 'строка с описанием 5', 'строка с описанием 6', 'строка с описанием 7', 'строка с описанием 8'];
+  var CoordY = {
+    MIN: 200,
+    MAX: 600
+  };
+
+  var MainPinSize = {
+    WIDTH: 62,
+    HEIGHT: 62,
+    ARROW: 18
+  };
+
+  var offsetY = MainPinSize.HEIGHT + MainPinSize.ARROW;
 
   window.constants = {
     COUNT_ADVERTISING: COUNT_ADVERTISING,
@@ -52,13 +56,8 @@
     PRICE_HOUSE: PRICE_HOUSE,
     PRICE_PALACE: PRICE_PALACE,
     PRICE_DEFAULT: PRICE_DEFAULT,
-    typeHouses: typeHouses,
-    checkin: checkin,
-    checkout: checkout,
-    features: features,
-    rooms: rooms,
-    guests: guests,
-    titles: titles,
-    descriptions: descriptions
+    CoordY: CoordY,
+    MainPinSize: MainPinSize,
+    offsetY: offsetY
   };
 })();
