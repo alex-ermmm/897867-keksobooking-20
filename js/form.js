@@ -50,7 +50,7 @@
       elementsFormsEnebled(mapsCheckbox);
       // включили форму добавления
       elementsFormsEnebled(adFormsElements);
-
+      window.pins.renderItem(window.pins.data);
       map.classList.remove('map--faded');
       adForm.classList.remove('ad-form--disabled');
     }
@@ -96,15 +96,19 @@
     switch (type.value) {
       case 'bungalo':
         price.placeholder = window.constants.PRICE_BUNGALO;
+        price.setAttribute('min', window.constants.PRICE_BUNGALO);
         break;
       case 'flat':
         price.placeholder = window.constants.PRICE_FLAT;
+        price.setAttribute('min', window.constants.PRICE_FLAT);
         break;
       case 'house':
         price.placeholder = window.constants.PRICE_HOUSE;
+        price.setAttribute('min', window.constants.PRICE_HOUSE);
         break;
       case 'palace':
         price.placeholder = window.constants.PRICE_PALACE;
+        price.setAttribute('min', window.constants.PRICE_PALACE);
         break;
       default:
         price.placeholder = window.constants.PRICE_DEFAULT;
@@ -143,6 +147,23 @@
       }
     }
   }
+
+  // обраотчик очистки формы
+  var resetFormButton = document.querySelector('.ad-form__reset');
+
+  function resetForm() {
+    var title = document.querySelector('#title');
+    title.value = '';
+
+    var price = document.querySelector('#price');
+    price.value = '';
+
+    var description = document.querySelector('#description');
+    description.value = '';
+  }
+
+
+  resetFormButton.addEventListener('click', resetForm);
 
   roomNumber.addEventListener('change', onRoomNumberChange);
 })();
