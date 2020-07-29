@@ -8,7 +8,6 @@
     var button = document.createElement('button');
 
     button.classList.add('map__pin');
-    //  element.classList.add('hidden');
     button.setAttribute('data-id', data.id);
     button.style.left = data.location.x + 'px';
     button.style.top = data.location.y + 'px';
@@ -17,7 +16,7 @@
     return button;
   }
 
-// функция создания DOM-элемента на основе JS-объекта
+  // функция создания DOM-элемента на основе JS-объекта
   function createPinImage(data) {
     var pinImage = document.createElement('img');
 
@@ -65,5 +64,4 @@
     data: [],
     renderItem: renderItem
   };
-})
-();
+})();

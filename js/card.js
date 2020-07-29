@@ -56,5 +56,4 @@
 
   mainPin.addEventListener('mousedown', onMainPinMouseDown);
 
-})
-();
+})();

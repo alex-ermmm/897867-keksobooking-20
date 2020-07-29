@@ -27,4 +27,4 @@
   housingType.addEventListener('change', filterByType);
   window.pins.renderItem(window.pins.data);
 
-})()
+})();

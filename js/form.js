@@ -154,8 +154,6 @@
   function resetForm() {
     var title = document.querySelector('#title');
     title.value = '';
-
-    var price = document.querySelector('#price');
     price.value = '';
 
     var description = document.querySelector('#description');

@@ -4,13 +4,12 @@
 
   function showOkMessage() {
     var main = document.querySelector('main');
-    var successContainer = document.querySelector('#success')
+    var successContainer = document.querySelector('#success');
     var success = successContainer.content.querySelector('.success');
 
     main.appendChild(success);
 
     // не выходит сделать обработкич один на всех
-    //success.addEventListener('click', closePopup1(success));
 
     success.addEventListener('click', function () {
       success.remove();
@@ -30,7 +29,7 @@
     evt.preventDefault();
 
     window.send.sendData(new FormData(form), function (response) {
-      var map = document.querySelector('.map')
+      var map = document.querySelector('.map');
       map.classList.add('map--faded');
 
       showOkMessage();
@@ -39,6 +38,4 @@
 
   var form = document.querySelector('.ad-form');
   form.addEventListener('submit', responseOk);
-  
-})
-();
+})();
