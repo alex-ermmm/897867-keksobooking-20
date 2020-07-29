@@ -155,13 +155,20 @@
     var title = document.querySelector('#title');
     title.value = '';
     price.value = '';
-
+    type.value = 'flat';
+    timein.value = '12:00';
+    timeOut.value = '12:00';
+    roomNumber.value = '1';
+    capacity.value = '4';
     var description = document.querySelector('#description');
     description.value = '';
   }
 
-
   resetFormButton.addEventListener('click', resetForm);
 
   roomNumber.addEventListener('change', onRoomNumberChange);
+
+  window.form = {
+    resetForm: resetForm
+  }
 })();

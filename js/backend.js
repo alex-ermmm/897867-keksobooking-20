@@ -21,6 +21,7 @@
         }
       }
     }
+
     pins.addEventListener('click', pinHandler);
   }
 
@@ -75,4 +76,11 @@
   }
 
   loadData(URL, onSuccess, onError);
+
+  mapPinMain.addEventListener('mousedown', clickButtonDataLoad);
+
+  window.backend = {
+    clickButtonDataLoad: clickButtonDataLoad()
+  }
+
 })();

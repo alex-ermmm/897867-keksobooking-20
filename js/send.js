@@ -31,6 +31,8 @@
 
     xhr.open('POST', URL);
     xhr.send(data);
+
+    window.form.resetForm();
   }
 
   window.send = {
